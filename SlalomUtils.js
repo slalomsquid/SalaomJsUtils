@@ -6,7 +6,7 @@ export async function readJson(relativePath, fallback = {}) {
   try {
     const raw = await readFile(filePath, "utf8");
     
-    // FIX: Check if the file is empty or just whitespace
+    // Check if the file is empty or just whitespace
     if (!raw.trim()) {
       console.warn(`File at ${relativePath} is empty. Using fallback.`);
       return fallback;
@@ -73,7 +73,7 @@ export function unhashPair(hash) {
     const bigHash = BigInt(hash);
     let C, isPositive;
 
-    // 1. Reverse the final sign mapping
+    // Reverse the final sign mapping
     if (bigHash >= 0n) {
         C = bigHash;
         isPositive = true;
@@ -82,8 +82,8 @@ export function unhashPair(hash) {
         isPositive = false;
     }
 
-    // 2. Reverse Szudzik's pairing to find A and B
-    // We need the integer square root
+    // Reverse Szudzik's pairing to find A and B
+    // get the integer square root
     const doubleC = 2n * C;
     const s = bigIntSqrt(doubleC);
     let A, B;
@@ -96,7 +96,7 @@ export function unhashPair(hash) {
         B = doubleC - (s * s) - s;
     }
 
-    // 3. Reverse the signed integer mapping (ZigZag)
+    // Reverse the signed integer mapping (ZigZag)
     const decode = (val) => {
         return val % 2n === 0n ? val / 2n : -(val + 1n) / 2n;
     };
