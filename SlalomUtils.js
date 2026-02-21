@@ -1,5 +1,18 @@
+import path from "path";
+import { fileURLToPath } from "url";
+import { writeFile, mkdir, readFile } from "fs/promises";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+let baseDir = process.cwd();
+
+export function setBaseDir(dir) {
+  baseDir = dir;
+}
+
 export async function readJson(relativePath, fallback = {}) {
-  const filePath = path.join(__dirname, relativePath);
+  const filePath = path.isAbsolute(relativePath) ? relativePath : path.join(baseDir, relativePath);
 
   await mkdir(path.dirname(filePath), { recursive: true });
 
@@ -32,7 +45,7 @@ export async function readJson(relativePath, fallback = {}) {
 };
 
 export async function writeJson(relativePath, obj) {
-  const filePath = path.join(__dirname, relativePath);
+  const filePath = path.isAbsolute(relativePath) ? relativePath : path.join(baseDir, relativePath);
 
   // ensure parent directory exists
   await mkdir(path.dirname(filePath), { recursive: true });
@@ -44,7 +57,7 @@ export async function writeJson(relativePath, obj) {
   );
 };
 
-function hashPair(a, b) {
+export function hashPair(a, b) {
     // Convert inputs to BigInt to handle 64-bit math correctly
     const bigA = BigInt(a);
     const bigB = BigInt(b);
