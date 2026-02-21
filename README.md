@@ -1,1 +1,1 @@
-This is a growing libaray of generic function I use in my JS projects
+This is a growing libaray of generic function I use in my JS projects. Currently being used in ModBlocks.
