@@ -1,0 +1,1 @@
+This is a growing libaray of generic function I use in my JS projects
